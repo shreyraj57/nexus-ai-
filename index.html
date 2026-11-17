@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101a2b">
+<title>NEXUS AI | PrimeNest Realty</title>
+<style>
+:root{--bg:#0b1220;--panel:#121e31;--panel2:#17263c;--line:#293b55;--text:#edf3fb;--muted:#9db0c8;--gold:#d6ad62;--green:#5bc49a;--red:#ef8d8d}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(145deg,#0b1220,#101c30);color:var(--text);font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
+header{padding:22px max(18px,calc((100% - 1180px)/2));border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
+.brand{font-size:25px;font-weight:800;letter-spacing:2px}.brand span{color:var(--gold)}.sub{color:var(--muted);font-size:12px}
+.wrap{max-width:1180px;margin:auto;padding:22px 18px 50px}.notice{border:1px solid #675333;background:#332a1c;color:#f4dfb8;border-radius:12px;padding:12px 14px;margin-bottom:18px;font-size:13px}
+nav{display:flex;gap:8px;overflow:auto;padding:4px 0 16px}button,.btn{cursor:pointer;border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:9px;padding:10px 14px;font-weight:600}button:hover,.btn:hover{border-color:var(--gold)}button.primary{background:var(--gold);color:#17130c;border-color:var(--gold)}button.danger{color:var(--red)}
+nav button[aria-current=true]{background:var(--gold);color:#17130c;border-color:var(--gold)}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;min-width:0}.metric{font-size:27px;font-weight:800;margin-top:5px}.muted{color:var(--muted)}h1{font-size:23px;margin:0 0 5px}h2{font-size:17px;margin:0 0 12px}.small{font-size:12px;color:var(--muted)}
+label{display:block;color:var(--muted);font-size:12px;margin:10px 0 4px}input,select,textarea{width:100%;background:#0c1728;color:var(--text);border:1px solid var(--line);border-radius:8px;padding:11px;font:inherit;min-width:0}textarea{min-height:82px;resize:vertical}form .actions{margin-top:13px;display:flex;gap:8px;flex-wrap:wrap}
+.row{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}.list{margin-top:12px}.item{padding:12px 0;border-top:1px solid var(--line)}.pill{display:inline-block;border:1px solid var(--line);border-radius:99px;padding:2px 8px;font-size:11px;color:var(--muted)}
+pre.output{white-space:pre-wrap;word-break:break-word;background:#0b1728;border:1px solid var(--line);padding:14px;border-radius:10px;font:14px/1.55 system-ui}
+section[hidden]{display:none!important}.empty{padding:18px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:10px}
+footer{margin-top:25px;color:var(--muted);font-size:12px;text-align:center}
+@media(max-width:760px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.two{grid-template-columns:1fr}.wrap{padding-top:15px}header{padding:16px 18px}}
+@media(max-width:360px){.grid{grid-template-columns:1fr 1fr}.metric{font-size:23px}}
+</style>
+</head>
+<body>
+<header><div><div class="brand">NEXUS <span>AI</span></div><div class="sub">PRIMENEST REALTY · FOUNDER WORKSPACE</div></div><div class="pill">LOCAL EDITION · v1.0</div></header>
+<main class="wrap">
+<div class="notice"><b>Owner-controlled workspace.</b> Your records are stored in this browser on this device. This version works without paid APIs. It does not scrape private data, publish ads, or contact people automatically.</div>
+<nav aria-label="Main navigation">
+<button data-view="overview" aria-current="true">Overview</button><button data-view="leads">Leads</button><button data-view="properties">Properties</button><button data-view="matches">Matches</button><button data-view="marketing">Marketing studio</button><button data-view="reports">Reports & backup</button>
+</nav>
+<section id="overview">
+<div class="row"><div><h1>Business command centre</h1><div class="muted">A practical starting point for managing property enquiries and inventory.</div></div><button class="primary" onclick="show('leads')">＋ Add lead</button></div>
+<div class="grid" style="margin:16px 0"><div class="card"><div class="small">BUYER LEADS</div><div class="metric" id="buyerMetric">0</div></div><div class="card"><div class="small">SELLER LEADS</div><div class="metric" id="sellerMetric">0</div></div><div class="card"><div class="small">PROPERTIES</div><div class="metric" id="propertyMetric">0</div></div><div class="card"><div class="small">POTENTIAL MATCHES</div><div class="metric" id="matchMetric">0</div></div></div>
+<div class="two"><div class="card"><h2>Quick actions</h2><div class="row"><button onclick="show('leads')">Add buyer / seller</button><button onclick="show('properties')">Add property</button><button onclick="show('marketing')">Create ad copy</button></div></div><div class="card"><h2>Recent activity</h2><div id="activity" class="muted small">No activity yet. Add your first lead or property.</div></div></div>
+</section>
+<section id="leads" hidden>
+<div class="two"><div class="card"><h2>Add a lead</h2><form id="leadForm">
+<label>Lead type</label><select id="ltype"><option>Buyer</option><option>Seller</option></select>
+<label>Full name *</label><input id="lname" required maxlength="90" placeholder="Customer name">
+<label>Phone / WhatsApp</label><input id="lphone" maxlength="30" placeholder="Only store details shared with you">
+<label>Preferred area / property location *</label><input id="llocation" required maxlength="100" placeholder="e.g. Gotri, Vadodara">
+<label>Budget (₹)</label><input id="lbudget" type="number" min="0" max="10000000000" placeholder="5000000">
+<label>Requirement / notes</label><textarea id="lnote" maxlength="1000" placeholder="2 BHK, ready possession, timeline..."></textarea>
+<div class="actions"><button class="primary">Save lead</button></div></form></div><div class="card"><div class="row"><h2>Lead database</h2><span class="pill" id="leadCount">0 records</span></div><input id="leadSearch" placeholder="Search name, area, phone..." style="margin-bottom:8px"><div id="leadList" class="list"></div></div></div>
+</section>
+<section id="properties" hidden>
+<div class="two"><div class="card"><h2>Add property</h2><form id="propertyForm">
+<label>Property title *</label><input id="ptitle" required maxlength="120" placeholder="2 BHK apartment">
+<label>Location / area *</label><input id="plocation" required maxlength="100" placeholder="Gotri, Vadodara">
+<label>Asking price (₹) *</label><input id="pprice" type="number" required min="1" max="10000000000">
+<label>Property type</label><select id="ptype"><option>Apartment</option><option>Villa</option><option>Plot</option><option>Commercial</option><option>Office</option><option>Other</option></select>
+<label>Bedrooms</label><input id="pbeds" type="number" min="0" max="30" placeholder="2">
+<label>Details</label><textarea id="pdetails" maxlength="1000" placeholder="Area, amenities, possession, verified details..."></textarea>
+<div class="actions"><button class="primary">Save property</button></div></form></div><div class="card"><div class="row"><h2>Property inventory</h2><span class="pill" id="propertyCount">0 records</span></div><input id="propertySearch" placeholder="Search title or area..." style="margin-bottom:8px"><div id="propertyList" class="list"></div></div></div>
+</section>
+<section id="matches" hidden><div class="card"><div class="row"><div><h1>Buyer-property matches</h1><div class="muted small">Exact area match and buyer budget greater than or equal to asking price.</div></div><button class="primary" id="refreshMatches">Find matches</button></div><div id="matchList" class="list"><div class="empty">Select Find matches to screen your saved records.</div></div></div></section>
+<section id="marketing" hidden>
+<div class="two"><div class="card"><h2>Property advertisement writer</h2><form id="adForm">
+<label>Platform</label><select id="platform"><option>Instagram</option><option>Facebook</option><option>WhatsApp</option><option>Property listing</option></select>
+<label>Property headline *</label><input id="adtitle" required maxlength="120" placeholder="Spacious 3 BHK apartment">
+<label>Location *</label><input id="adloc" required maxlength="100" placeholder="Vadodara">
+<label>Price (₹)</label><input id="adprice" type="number" min="0" max="10000000000">
+<label>Verified highlights</label><textarea id="adpoints" maxlength="700" placeholder="Only include facts you have verified"></textarea>
+<label>Call to action / contact</label><input id="adcontact" maxlength="120" placeholder="DM PrimeNest Realty for details">
+<div class="actions"><button class="primary">Generate draft</button></div></form></div><div class="card"><h2>Generated copy</h2><div id="adOutput" class="empty">Your draft will appear here. Review every claim before publishing.</div><button id="copyAd" style="margin-top:10px" disabled>Copy draft</button></div></div>
+</section>
+<section id="reports" hidden><div class="two"><div class="card"><h2>Business snapshot</h2><div id="reportSummary" class="muted"></div><div class="actions"><button class="primary" id="exportCsv">Export leads CSV</button><button id="exportProperties">Export properties CSV</button></div></div><div class="card"><h2>Backup & restore</h2><p class="small muted">Download a backup regularly. Restore it on this browser to recover your records.</p><div class="actions"><button class="primary" id="backup">Download backup</button><label class="btn">Restore backup<input id="restoreFile" type="file" accept="application/json" hidden></label></div><p class="small muted">Keep backups private because they may contain customer contact information.</p></div></div></section>
+<footer>NEXUS AI · PrimeNest Realty · You control your records. Local browser storage only; this is not yet a cloud-synced or AI-connected service.</footer>
+</main>
+<script>
+(()=>{'use strict';
+const KEY='nexus_primenest_v1';
+let db={leads:[],properties:[],activity:[]};
+const $=id=>document.getElementById(id);
+const safe=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money=n=>'₹'+Number(n||0).toLocaleString('en-IN');
+function load(){try{const x=JSON.parse(localStorage.getItem(KEY)||'null');if(x&&Array.isArray(x.leads)&&Array.isArray(x.properties))db=x}catch(e){console.warn('Could not read saved workspace',e)}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(db));return true}catch(e){alert('Could not save. Your browser storage may be full or disabled. Export a backup and try again.');return false}}
+function log(msg){db.activity.unshift(new Date().toLocaleString()+' — '+msg);db.activity=db.activity.slice(0,8);save();renderActivity()}
+function show(id){document.querySelectorAll('main section').forEach(s=>s.hidden=s.id!==id);document.querySelectorAll('nav button').forEach(b=>b.setAttribute('aria-current',String(b.dataset.view===id)));if(id==='matches')renderMatches();if(id==='reports')renderReport()}
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>show(b.dataset.view)));
+function renderActivity(){$('activity').innerHTML=db.activity.length?db.activity.map(x=>'<div class="item">'+safe(x)+'</div>').join(''):'No activity yet.'}
+function renderLeads(){let q=$('leadSearch').value.toLowerCase();let arr=db.leads.filter(x=>(x.name+' '+x.location+' '+x.phone).toLowerCase().includes(q));$('leadCount').textContent=db.leads.length+' records';$('leadList').innerHTML=arr.length?arr.map(x=>`<div class="item"><div class="row"><b>${safe(x.name)}</b><span class="pill">${safe(x.type)}</span></div><div class="small">${safe(x.location)} · ${money(x.budget)}</div><div>${safe(x.note||'No notes')}</div><div class="small">${safe(x.phone||'No phone added')}</div><button class="danger" data-delete-lead="${x.id}" style="margin-top:8px">Delete</button></div>`).join(''):'<div class="empty">No leads found.</div>'}
+function renderProperties(){let q=$('propertySearch').value.toLowerCase();let arr=db.properties.filter(x=>(x.title+' '+x.location).toLowerCase().includes(q));$('propertyCount').textContent=db.properties.length+' records';$('propertyList').innerHTML=arr.length?arr.map(x=>`<div class="item"><b>${safe(x.title)}</b><div class="small">${safe(x.location)} · ${money(x.price)}</div><div>${safe(x.type)}${x.beds?' · '+x.beds+' BHK':''}</div><div>${safe(x.details||'No details')}</div><button class="danger" data-delete-property="${x.id}" style="margin-top:8px">Delete</button></div>`).join(''):'<div class="empty">No properties found.</div>'}
+function matches(){let out=[];db.leads.filter(l=>l.type==='Buyer').forEach(l=>db.properties.forEach(p=>{if(l.location.trim().toLowerCase()===p.location.trim().toLowerCase()&&Number(l.budget)>=Number(p.price))out.push({l,p})}));return out}
+function renderMatches(){let a=matches();$('matchList').innerHTML=a.length?a.map(x=>`<div class="item"><b>${safe(x.l.name)}</b> ↔ ${safe(x.p.title)}<div class="small">${safe(x.l.location)} · Buyer budget ${money(x.l.budget)} · Asking ${money(x.p.price)}</div></div>`).join(''):'<div class="empty">No exact matches yet. Check spelling of locations or add more records.</div>'}
+function renderReport(){$('reportSummary').innerHTML=`Buyers: ${db.leads.filter(x=>x.type==='Buyer').length}<br>Sellers: ${db.leads.filter(x=>x.type==='Seller').length}<br>Properties: ${db.properties.length}<br>Potential matches: ${matches().length}`}
+function render(){ $('buyerMetric').textContent=db.leads.filter(x=>x.type==='Buyer').length;$('sellerMetric').textContent=db.leads.filter(x=>x.type==='Seller').length;$('propertyMetric').textContent=db.properties.length;$('matchMetric').textContent=matches().length;renderLeads();renderProperties();renderActivity(); }
+$('leadForm').addEventListener('submit',e=>{e.preventDefault();let name=$('lname').value.trim(),loc=$('llocation').value.trim(),budget=Number($('lbudget').value||0);if(!name||!loc||!Number.isFinite(budget)||budget<0)return alert('Check the required fields and budget.');db.leads.unshift({id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),type:$('ltype').value,name,phone:$('lphone').value.trim(),location:loc,budget,note:$('lnote').value.trim(),created:new Date().toISOString()});save();e.target.reset();render();log('Added '+name+' as a '+db.leads[0].type+' lead.');});
+$('propertyForm').addEventListener('submit',e=>{e.preventDefault();let price=Number($('pprice').value);if(!Number.isFinite(price)||price<=0)return alert('Enter a valid asking price.');db.properties.unshift({id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),title:$('ptitle').value.trim(),location:$('plocation').value.trim(),price,type:$('ptype').value,beds:$('pbeds').value,details:$('pdetails').value.trim(),created:new Date().toISOString()});save();e.target.reset();render();log('Added property '+db.properties[0].title+'.')});
+document.addEventListener('click',e=>{let a=e.target.dataset.deleteLead,b=e.target.dataset.deleteProperty;if(a&&confirm('Delete this lead?')){db.leads=db.leads.filter(x=>x.id!==a);save();render();log('Deleted a lead.')}if(b&&confirm('Delete this property?')){db.properties=db.properties.filter(x=>x.id!==b);save();render();log('Deleted a property.')}});
+$('leadSearch').addEventListener('input',renderLeads);$('propertySearch').addEventListener('input',renderProperties);$('refreshMatches').addEventListener('click',renderMatches);
+let generated='';$('adForm').addEventListener('submit',e=>{e.preventDefault();let title=$('adtitle').value.trim(),loc=$('adloc').value.trim();if(!title||!loc)return;let price=Number($('adprice').value||0),points=$('adpoints').value.trim(),contact=$('adcontact').value.trim()||'Message PrimeNest Realty for details';generated=`${title.toUpperCase()}\\n\\n📍 Location: ${loc}${price>0?'\\n💰 Asking price: '+money(price):''}${points?'\\n\\nHighlights:\\n'+points:''}\\n\\n${contact}\\n\\nPrimeNest Realty | Property buying • selling • investment\\n\\n#PrimeNestRealty #VadodaraRealEstate #PropertyForSale`;generated=generated.replace(/\\n/g,'\n');$('adOutput').innerHTML='<pre class="output">'+safe(generated)+'</pre><div class="small">Draft for '+safe($('platform').value)+'. Verify price, ownership, availability, amenities and all claims before posting.</div>';$('copyAd').disabled=false;log('Generated marketing draft for '+title+'.')});
+$('copyAd').addEventListener('click',async()=>{if(!generated)return;try{await navigator.clipboard.writeText(generated);$('copyAd').textContent='Copied'}catch(e){let r=document.createRange();r.selectNodeContents($('adOutput').querySelector('pre'));let s=getSelection();s.removeAllRanges();s.addRange(r);$('copyAd').textContent='Text selected — copy manually'}});
+function csv(rows){let data=rows.map(row=>row.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\r\n');let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([data],{type:'text/csv'}));a.download='nexus-export.csv';a.click();URL.revokeObjectURL(a.href)}
+$('exportCsv').addEventListener('click',()=>csv([['Type','Name','Phone','Location','Budget','Notes','Created'],...db.leads.map(x=>[x.type,x.name,x.phone,x.location,x.budget,x.note,x.created])]));$('exportProperties').addEventListener('click',()=>csv([['Title','Location','Price','Type','Bedrooms','Details'],...db.properties.map(x=>[x.title,x.location,x.price,x.type,x.beds,x.details])]));
+$('backup').addEventListener('click',()=>{let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(db,null,2)],{type:'application/json'}));a.download='nexus-backup.json';a.click();URL.revokeObjectURL(a.href)});
+$('restoreFile').addEventListener('change',async e=>{let f=e.target.files[0];if(!f)return;try{let x=JSON.parse(await f.text());if(!Array.isArray(x.leads)||!Array.isArray(x.properties))throw Error();if(confirm('Replace the current local workspace with this backup?')){db={leads:x.leads,properties:x.properties,activity:Array.isArray(x.activity)?x.activity:[]};save();render();alert('Backup restored.')}}catch(err){alert('That backup file is not valid.')}e.target.value=''});
+load();render();
+})();
+</script>
+</body></html>
